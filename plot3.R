@@ -1,0 +1,16 @@
+library(lubridate)
+library(dplyr)
+
+pwr_cns <- read.table("./household_power_consumption.txt",header=TRUE,sep=";",na.strings="?")
+pwr_cns$Date <- as.Date(pwr_cns$Date,format="%d/%m/%Y")
+pwr_usage <- subset(pwr_cns, Date == "2007-02-01" | Date == "2007-02-02")
+pwr_usage <- mutate(pwr_usage,DateTime= ymd_hms(paste(Date,Time)) )
+
+png("plot3.png",width = 480, height = 480)
+attach(pwr_usage)
+plot(DateTime,Sub_metering_1, type="l",xlab="",ylab="Energy sub metering")
+lines(DateTime,Sub_metering_2,type="l",col = "green")
+lines(DateTime,Sub_metering_3,type="l",col = "blue")
+legend("topright",legend=c("sub_metering_1","sub_metering_2","sub_metering_3"), col=c("black","green","blue"),lty=c(1,1,1))
+detach(pwr_usage)
+dev.off()

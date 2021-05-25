@@ -1,0 +1,5 @@
+pwr_cns <- read.table("./household_power_consumption.txt",header=TRUE,sep=";",na.strings="?")
+pwr_cns$Date <- as.Date(pwr_cns$Date,format="%d/%m/%Y")
+png("plot1.png",width = 480, height = 480)
+hist(pwr_usage$Global_active_power,col = "red", main = "Global Active Power",xlab = "Global Active Power (kilowatts)")
+dev.off()
